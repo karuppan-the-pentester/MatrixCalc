@@ -41,7 +41,6 @@ for i in range(0, n):
         exec("%s.append(0)" % ("R"+str(i)))
     exec("result.append(%s)" % ("R"+str(i)))
 
-ExactResult = []
 for B in li:
     result = np.dot(A, list(B))
     ZeroChecker = [item for item,
@@ -49,7 +48,7 @@ for B in li:
 
     if (n % 2) == 0:
         if sum(result) == 0 and 0 not in result:
-            print(result)
+            print("A x "+str(B)+" => "+str(result))
     else:
         if sum(result) == 0 and 0 in result and 0 not in ZeroChecker:
-            print(result)
+            print("A x "+str(B)+" => "+str(result))

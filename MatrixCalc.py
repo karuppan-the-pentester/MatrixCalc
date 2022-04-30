@@ -1,3 +1,4 @@
+import collections
 from itertools import permutations
 import numpy as np
 n = int(input("Enter the Order Of matrix 'n' : "))
@@ -11,12 +12,12 @@ for i in range(1, n+1):
     exec("A.append(%s)" % ("A"+str(i)))
 if (n % 2) == 0:
     BTemp = []
-    for BTempPairValue in range(1, round((n/2)+1)):
+    for BTempPairValue in range(1, round(n/2+1)):
         BTemp.append(BTempPairValue)
         BTemp.append(-BTempPairValue)
 else:
     BTemp = [0]
-    for BTempPairValue in range(1, round(n/2)+1):
+    for BTempPairValue in range(1, round((n+1)/2)):
         BTemp.append(BTempPairValue)
         BTemp.append(-BTempPairValue)
 
@@ -35,11 +36,20 @@ def permutation(lst):
 li = list(permutations(BTemp))
 result = []
 for i in range(0, n):
-    exec("%s = []" % ("A"+str(i)))
+    exec("%s = []" % ("R"+str(i)))
     for j in range(0, n):
-        exec("%s.append(2)" % ("A"+str(i)))
-    exec("result.append(%s)" % ("A"+str(i)))
+        exec("%s.append(0)" % ("R"+str(i)))
+    exec("result.append(%s)" % ("R"+str(i)))
+
+ExactResult = []
 for B in li:
     result = np.dot(A, list(B))
-    for r in result:
-        print(r)
+    ZeroChecker = [item for item,
+                   count in collections.Counter(result).items() if count > 1]
+
+    if (n % 2) == 0:
+        if sum(result) == 0 and 0 not in result:
+            print(result)
+    else:
+        if sum(result) == 0 and 0 in result and 0 not in ZeroChecker:
+            print(result)

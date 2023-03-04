@@ -13,33 +13,36 @@ print('''
 
 n = int(input("Enter the Order Of matrix 'n' : "))
 A = []
+A_Row = []
 BTemp = []
 
 print("Enter the entries in a line by line (separated by space): \n")
 
 for i in range(1, n+1):
     A.append(list(map(int, input("A"+str(i)+" => ").split())))
+    
 
-for i in range(1, n+1):
-    BTemp.append(list(map(int, input("B"+str(i)+" => ").split())))
+for i in A:
+    val=sum(i)
+    A_Row.append(val)
+    
+if (n % 2) == 0:
+    BTemp = []
+    for BTempPairValue in range(1, round(n/2+1)):
+        BTemp.append(BTempPairValue)
+        BTemp.append(-BTempPairValue)
+else:
+    print("Odd condition not works ")
+    exit()
 
+print("\nA1 => "+str(A)+"\n")
+print("\nB1 => "+str(BTemp)+"\n")
 
-def permutation(lst):
-    l = []
-    for i in range(len(lst)):
-        m = lst[i]
-        print(m)
-    remLst = lst[:i] + lst[i+1:]
-    for p in permutation(remLst):
-        l.append([m] + p)
-    return l
+result = np.dot(A, list(BTemp))
+print(result)
 
-
-li = list(permutations(BTemp))
-print(li)
-# for B in li:
-#     result = np.dot(A, list(B))
-#     ZeroChecker = [item for item,
-#                    count in collections.Counter(result).items() if count > 1]
-#     print(ZeroChecker)
-# print("\n")
+c=[]
+for j in range(n):
+    for i in result:
+        print(str(i)+" => "+str(j))
+    

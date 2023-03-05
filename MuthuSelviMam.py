@@ -1,6 +1,7 @@
 import collections
 from itertools import permutations
 import numpy as np
+import math
 
 print('''
     __  ___      __       _         ______      __
@@ -20,12 +21,12 @@ print("Enter the entries in a line by line (separated by space): \n")
 
 for i in range(1, n+1):
     A.append(list(map(int, input("A"+str(i)+" => ").split())))
-    
+
 
 for i in A:
-    val=sum(i)
+    val = sum(i)
     A_Row.append(val)
-    
+
 if (n % 2) == 0:
     BTemp = []
     for BTempPairValue in range(1, round(n/2+1)):
@@ -35,14 +36,30 @@ else:
     print("Odd condition not works ")
     exit()
 
-print("\nA1 => "+str(A)+"\n")
-print("\nB1 => "+str(BTemp)+"\n")
 
-result = np.dot(A, list(BTemp))
-print(result)
+def permutation(lst):
+    l = []
+    for i in range(len(lst)):
+        m = lst[i]
+        print(m)
+    remLst = lst[:i] + lst[i+1:]
+    for p in permutation(remLst):
+        l.append([m] + p)
+    return l
 
-c=[]
-for j in range(n):
-    for i in result:
-        print(str(i)+" => "+str(j))
-    
+print("\nA(s) => "+str(A_Row))
+print("\nB    => "+str(BTemp)+"\n")
+
+li = list(permutations(BTemp))
+
+for B in li:
+
+    result = np.dot(A, list(B))
+    c = []
+    for i in range(0, len(result)):
+        if ((result[i]/A_Row[i]) < 0):
+            c.append(math.floor(result[i]/A_Row[i]))
+        else:
+            c.append(math.ceil(result[i]/A_Row[i]))
+
+    print("A x "+str(B)+" => "+str(result)+" | C => "+str(c))

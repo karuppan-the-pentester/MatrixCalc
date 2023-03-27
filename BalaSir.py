@@ -58,15 +58,20 @@ try:
                 MatrixResultChecker = 1
                 ResultMatrix.append(result)
     print("\n")
+    internalcheck=0
     for B in li:
         result = np.dot(A, list(B))
         ZeroChecker = [item for item,
                        count in collections.Counter(result).items() if count > 1]
+        for i in result:
+            if (i and -i in result):
+                internalcheck = internalcheck + 1
         if (n % 2) == 0:
-            if sum(result) == 0 and 0 not in result and result not in ResultMatrix:
+            if sum(result) == 0 and 0 not in result and result not in ResultMatrix and internalcheck==n:
                 print(str(result))
+
         else:
-            if sum(result) == 0 and 0 in result and len(ZeroChecker) == 0 and result not in ResultMatrix:
+            if sum(result) == 0 and 0 in result and len(ZeroChecker) == 0 and result not in ResultMatrix and internalcheck==n:
                 print(str(result))
 
     if MatrixResultChecker == 0:
